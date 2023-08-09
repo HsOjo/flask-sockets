@@ -60,12 +60,17 @@ class Sockets(object):
         self.blueprints = {}
         self._blueprint_order = []
 
-        self.before_request_funcs = {}
-        self.after_request_funcs = {}
-        self.teardown_request_funcs = {}
-        self.url_default_functions = {}
-        self.url_value_preprocessors = {}
-        self.template_context_processors = {}
+        class DummyDict(dict):
+            def __getitem__(self, item):
+                return []
+
+        self.before_request_funcs = \
+            self.after_request_funcs = \
+            self.teardown_request_funcs = \
+            self.url_default_functions = \
+            self.url_value_preprocessors = \
+            self.template_context_processors = \
+            DummyDict()
 
         if app:
             self.init_app(app)
@@ -102,7 +107,6 @@ class Sockets(object):
         else:
             # self.blueprints[blueprint.name] = blueprint
             # self._blueprint_order.append(blueprint)
-            self.template_context_processors[blueprint.name] = []
             first_registration = True
 
         if first_registration:
