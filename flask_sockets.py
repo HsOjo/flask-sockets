@@ -93,11 +93,12 @@ class Sockets(object):
                 'are created on the fly need unique names.'
                 % (blueprint, self.blueprints[blueprint.name], blueprint.name))
         else:
-            self.blueprints[blueprint.name] = blueprint
-            self._blueprint_order.append(blueprint)
+            # self.blueprints[blueprint.name] = blueprint
+            # self._blueprint_order.append(blueprint)
             first_registration = True
 
-        blueprint.register(self, options, first_registration)
+        if first_registration:
+            blueprint.register(self, options)
 
 
 # CLI sugar.
